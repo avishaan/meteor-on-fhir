@@ -27,10 +27,10 @@ module.exports = {
   },
   'User can log out.': function (client) {
     client.assert.elementPresent('#authenticatedUsername')
-      .saveScreenshot("tests/nightwatch/screenshots/accounts/C-AuthenticatedMenu.png");
+      .saveScreenshot("tests/nightwatch/screenshots/accounts/C-AuthenticatedMenu.png")
       .assert.containsText('#authenticatedUsername', 'Alice Doe')
       .click('#authenticatedUsername').pause(1500)
-      .saveScreenshot("tests/nightwatch/screenshots/accounts/C-LogoutMenu.png");
+      .saveScreenshot("tests/nightwatch/screenshots/accounts/C-LogoutMenu.png")
       .assert.elementPresent('#authenticatedUserMenu .notificationMenu .logoutMenuItem')
       .click('#authenticatedUserMenu .notificationMenu .logoutMenuItem').pause(500)
       .assert.elementPresent('#loginPage')
