@@ -15,19 +15,25 @@ module.exports = {
       .signup('Alice', 'Doe', 'alice@test.org', 'alicedoe')
       .pause(1000, client);
 
-    indexPage.expect.element('#indexPage').to.be.present;
-    indexPage.expect.element('#authenticatedUsername').text.to.contain('Alice Doe');
+    client
+      .assert.elementPresent('#indexPage')
+      .assert.containsText('#authenticatedUsername', "Alice Doe")
+      .saveScreenshot("tests/nightwatch/screenshots/accounts/A-SignUp.png");
   },
   'User gets logged in after signup.': function (client) {
-    client.verify.elementPresent('#indexPage')
+    client
+      .assert.elementPresent('#indexPage')
+      .saveScreenshot("tests/nightwatch/screenshots/accounts/B-AuthenticatedIndex.png");
   },
   'User can log out.': function (client) {
-    client.verify.elementPresent('#authenticatedUsername')
-      .verify.containsText('#authenticatedUsername', 'Alice Doe')
+    client.assert.elementPresent('#authenticatedUsername')
+      .saveScreenshot("tests/nightwatch/screenshots/accounts/C-AuthenticatedMenu.png");
+      .assert.containsText('#authenticatedUsername', 'Alice Doe')
       .click('#authenticatedUsername').pause(1500)
-      .verify.elementPresent('#authenticatedUserMenu .notificationMenu .logoutMenuItem')
+      .saveScreenshot("tests/nightwatch/screenshots/accounts/C-LogoutMenu.png");
+      .assert.elementPresent('#authenticatedUserMenu .notificationMenu .logoutMenuItem')
       .click('#authenticatedUserMenu .notificationMenu .logoutMenuItem').pause(500)
-      .verify.elementPresent('#loginPage')
+      .assert.elementPresent('#loginPage')
   },
   'User can sign in.': function (client) {
     const loginPage = client.page.loginPage();
@@ -43,47 +49,47 @@ module.exports = {
   },
   "User can view profile.": function (client) {
     client
-      .verify.elementPresent("#authenticatedUsername")
+      .assert.elementPresent("#authenticatedUsername")
       .click("#authenticatedUsername").pause(500)
 
-      .verify.elementPresent("#authenticatedUserMenu .profileMenuItem")
+      .assert.elementPresent("#authenticatedUserMenu .profileMenuItem")
       .click("#authenticatedUserMenu .profileMenuItem").pause(500)
 
-      .verify.elementPresent("#myProfilePage")
+      .assert.elementPresent("#myProfilePage")
   },
   "User can edit profile avatar.": function (client) {
     var myArray = 'https://pbs.twimg.com/profile_images/436598467956187136/yncbkX83_400x400.jpeg'.split('');
 
     client
-      .verify.elementPresent('#avatarImage')
-      .verify.attributeEquals('#avatarImage', 'src', 'http://localhost:3000/thumbnail.png')
+      .assert.elementPresent('#avatarImage')
+      .assert.attributeEquals('#avatarImage', 'src', 'http://localhost:3000/thumbnail.png')
 
-      .verify.elementPresent('input[name="avatar"]')
+      .assert.elementPresent('input[name="avatar"]')
         .clearValue('input[name="avatar"]')
         .setValue('input[name="avatar"]', 'https://foo').pause(500)
-        .verify.attributeEquals('#avatarImage', 'src', 'http://localhost:3000/noAvatar.png')
+        .assert.attributeEquals('#avatarImage', 'src', 'http://localhost:3000/noAvatar.png')
 
-      .verify.elementPresent('input[name="avatar"]')
+      .assert.elementPresent('input[name="avatar"]')
         .clearValue('input[name="avatar"]')
 
         for(var i=0; i < myArray.length; i++) {
           client.setValue('input[name="avatar"]', myArray[i]).pause(50);
         };
 
-        client.pause(3000).verify.attributeEquals('#avatarImage', 'src', 'https://pbs.twimg.com/profile_images/436598467956187136/yncbkX83_400x400.jpeg')
+        client.pause(3000).assert.attributeEquals('#avatarImage', 'src', 'https://pbs.twimg.com/profile_images/436598467956187136/yncbkX83_400x400.jpeg')
   },
   "User can change password.": function (client) {
     var oldPassArray = 'alicedoe'.split('');
     var newPassArray = 'alice123'.split('');
 
     client
-      .verify.elementPresent("label.passwordTab")
+      .assert.elementPresent("label.passwordTab")
       .click("label.passwordTab").pause(500)
 
-      .verify.elementPresent("input[name=oldPassword]")
-      .verify.elementPresent("input[name=newPassword]")
-      .verify.elementPresent("input[name=confirmPassword]")
-      .verify.elementPresent("#changePasswordButton")
+      .assert.elementPresent("input[name=oldPassword]")
+      .assert.elementPresent("input[name=newPassword]")
+      .assert.elementPresent("input[name=confirmPassword]")
+      .assert.elementPresent("#changePasswordButton")
 
 
         .clearValue('input[name="oldPassword"]')
@@ -105,24 +111,24 @@ module.exports = {
 
         client.click("#changePasswordButton").pause(1000)
 
-        .verify.attributeEquals('input[name="oldPassword"]', 'value', '')
-        .verify.attributeEquals('input[name="newPassword"]', 'value', '')
-        .verify.attributeEquals('input[name="confirmPassword"]', 'value', '')
+        .assert.attributeEquals('input[name="oldPassword"]', 'value', '')
+        .assert.attributeEquals('input[name="newPassword"]', 'value', '')
+        .assert.attributeEquals('input[name="confirmPassword"]', 'value', '')
 
-      .verify.elementPresent("#authenticatedUsername")
+      .assert.elementPresent("#authenticatedUsername")
       .click("#authenticatedUsername").pause(500)
 
-      .verify.elementPresent("#authenticatedUserMenu .logoutMenuItem")
+      .assert.elementPresent("#authenticatedUserMenu .logoutMenuItem")
       .click("#authenticatedUserMenu .logoutMenuItem").pause(500)
 
-      .verify.elementPresent("#loginPage")
+      .assert.elementPresent("#loginPage")
   },
   "User can sign in with new password.": function (client) {
     client
-        .verify.elementPresent("#loginPage")
-        .verify.elementPresent('input[name="emailAddress"]')
-        .verify.elementPresent('input[name="password"]')
-        .verify.elementPresent('#loginButton')
+        .assert.elementPresent("#loginPage")
+        .assert.elementPresent('input[name="emailAddress"]')
+        .assert.elementPresent('input[name="password"]')
+        .assert.elementPresent('#loginButton')
 
         .clearValue('input[name="emailAddress"]')
         .clearValue('input[name="password"]')
@@ -131,44 +137,44 @@ module.exports = {
         .setValue('input[name="password"]', 'alice123')
 
         .click("#loginButton").pause(1000)
-          .verify.elementPresent("#indexPage");
+          .assert.elementPresent("#indexPage");
   },
   "User can delete account.": function (client) {
     // log out
     var userIdArray = "alice@test.org";
 
     client
-      .verify.elementPresent("#authenticatedUsername")
+      .assert.elementPresent("#authenticatedUsername")
       .click("#authenticatedUsername").pause(500)
 
-      .verify.elementPresent("#authenticatedUserMenu .profileMenuItem")
+      .assert.elementPresent("#authenticatedUserMenu .profileMenuItem")
       .click("#authenticatedUserMenu .profileMenuItem").pause(500)
 
       // the menu doesn't auto-close, so we need to manually close it
       // so it doesn't obscure other components
-      .verify.elementPresent("#authenticatedUsername")
+      .assert.elementPresent("#authenticatedUsername")
       .click("#authenticatedUsername").pause(500)
 
-      .verify.elementPresent("label.systemTab")
+      .assert.elementPresent("label.systemTab")
       .click("label.systemTab").pause(500)
 
-      .verify.elementPresent("#deleteUserButton")
+      .assert.elementPresent("#deleteUserButton")
       .click("#deleteUserButton").pause(500)
 
 
-      .verify.elementPresent("input[name='_id']")
-      .verify.elementPresent("input[name='email']")
-      .verify.elementPresent("input[name='confirm']")
+      .assert.elementPresent("input[name='_id']")
+      .assert.elementPresent("input[name='email']")
+      .assert.elementPresent("input[name='confirm']")
       .clearValue('input[name="confirm"]');
 
       for(var i=0; i < userIdArray.length; i++) {
         client.setValue('input[name="confirm"]', userIdArray[i]).pause(50)
       }
 
-      client.verify.elementPresent("#confirmDeleteUserButton")
+      client.assert.elementPresent("#confirmDeleteUserButton")
       .click("#confirmDeleteUserButton").pause(1500)
 
-      .verify.elementPresent("#loginPage")
+      .assert.elementPresent("#loginPage")
       .end();
   }
 };
