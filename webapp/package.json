@@ -4,21 +4,22 @@
   "repository": "http://github.com/awatson1978/fire-demo",
   "description": "Application description.",
   "scripts": {
-    "start": "meteor --settings settings-development.json",
-    "test": "meteor test --driver-package dispatch:mocha-phantomjs --port 5000",
-    "test-app": "meteor test --full-app --driver-package dispatch:mocha-phantomjs --port 5000 --once",
+    "test": "meteor test --driver-package practicalmeteor:mocha --port 3030",
+    "test-app": "meteor test --full-app --driver-package practicalmeteor:mocha --port 3030 --once",
+    "test-packages": "meteor test-packages",
+    "circle": "NODE_ENV=circle meteor --settings settings.cirlce.json",
     "package-verification": "starrynight run-tests --type package-verification",
     "verification": "starrynight run-tests --type verification",
     "validation": "starrynight run-tests --type validation",
     "spacejam": "starrynight run-tests --framework spacejam",
-    "chimp-test": "chimp --ddp=http://localhost:3000 --mocha --path=tests/chimp",
-    "chimp-watch": "chimp --ddp=http://localhost:3000 --watch --mocha --path=tests/chimp",
-    "staging": "meteor deploy staging.meteor.com --settings settings-development.json",
-    "production": "meteor deploy production.meteor.com --settings settings-production.json",
+    "deploy-galaxy": "DEPLOY_HOSTNAME=galaxy.meteor.com meteor deploy meteor-on-fhir.meteorapp.com --settings settings.galaxy.json",
     "coverage": "COVERAGE=1 meteor",
     "monitor": "COVERAGE=1 meteor test --driver-package dispatch:mocha --port 5000",
     "nightwatch": "nightwatch -c .meteor/nightwatch.json",
-    "phantom": "nightwatch -c .meteor/nightwatch.json --env phantom"
+    "gagarin": "starrynight run-tests --type verification",
+    "phantom-nightwatch": "nightwatch -c .meteor/nightwatch.json --env phantom",
+    "phantom-mocha": "meteor test --once --driver-package dispatch:mocha-phantomjs --port 3030",
+    "phantom-mocha-app": "meteor test --full-app --driver-package dispatch:mocha-phantomjs --port 3030 --once"
   },
   "devDependencies": {
     "eslint": "^2.13.0",
@@ -29,7 +30,8 @@
     "nightwatch": "0.9.8",
     "selenium-server-standalone-jar": "2.45.0",
     "chromedriver": "2.19.0",
-    "phantomjs-prebuilt": "2.1.12"
+    "phantomjs-prebuilt": "2.1.12",
+    "spacejam": "1.6.1"
   },
   "eslintConfig": {
     "parserOptions": {

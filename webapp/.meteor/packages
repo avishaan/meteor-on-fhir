@@ -41,10 +41,10 @@ dburles:factory
 momentjs:moment
 
 lmieulet:meteor-coverage
-practicalmeteor:chai
-#practicalmeteor:mocha
 practicalmeteor:mocha-console-runner
-#dispatch:mocha-phantomjs
+practicalmeteor:mocha
+practicalmeteor:chai
+dispatch:mocha-phantomjs
 
 nathantreid:css-modules
 react-meteor-data
@@ -70,3 +70,7 @@ percolate:synced-cron
 awatson1978:accounts-muppets
 
 anti:gagarin
+clinical:hl7-resource-device
+clinical:hl7-resource-person
+
+xolvio:cleaner

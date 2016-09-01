@@ -12,10 +12,6 @@ export const insertTopic = new ValidatedMethod({
   validate: new SimpleSchema({
     'name': { type: String },
     'createdAt': { type: Date },
-    // 'category': { type: [ String ], optional: true },
-    // 'replies': { type: Number, optional: true },
-    // 'views': { type: Number, optional: true },
-    // 'activity': { type: Date, optional: true },
     'createdBy.display': { type: String, optional: true },
     'createdBy.reference': { type: String, optional: true },
     'createdBy.avatar': { type: String, optional: true },
@@ -38,31 +34,46 @@ export const updateTopic = new ValidatedMethod({
   name: 'topics.update',
   validate: new SimpleSchema({
     '_id': { type: String },
-    'update': { type: Object, blackbox: true, optional: true}
+    'update.name': { type: String}
   }).validator(),
   run({ _id, update }) {
-    // console.log("updateTopic");
-    // console.log("_id", _id);
-    // console.log("update", update);
+    console.log("updateTopic");
 
-    let practitioner = Topics.findOne({_id: _id});
+    let topic = Topics.findOne({_id: _id});
 
-    delete practitioner._id;
-    delete practitioner._document;
-    delete practitioner._super_;
-    practitioner.name = update.name;
-    practitioner.createdAt = update.createdAt;
-    practitioner.category = update.category;
-    practitioner.replies = update.replies;
-    practitioner.views = update.views;
-    practitioner.activity = update.activity;
-    practitioner.photo.push({
-      url: update.gender.photo
-    });
+    delete topic._id;
+    delete topic._document;
+    delete topic._super_;
 
-    Topics.update(_id, { $set: practitioner });
+    topic.name = update.name;
+    topic.createdAt = update.createdAt;
+    topic.category = update.category;
+    topic.replies = update.replies;
+    topic.views = update.views;
+    topic.activity = update.activity;
+    topic.photo = [];
+
+    // if (update.gender) {
+    //   topic.photo.push({
+    //     url: update.photo
+    //   });
+    // }
+
+    Topics.update({_id: _id}, { $set: topic });
+
   }
 });
+export const removeTopic = new ValidatedMethod({
+  name: 'topics.remove',
+  validate:  new SimpleSchema({
+    _id: { type: String }
+  }).validator(),
+  run({ _id }) {
+    console.log("Removing topic " + _id);
+    Topics.remove(_id);
+  }
+});
+
 
 export const removeTopicById = new ValidatedMethod({
   name: 'topics.removeById',
