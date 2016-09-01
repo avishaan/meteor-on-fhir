@@ -23,7 +23,8 @@ module.exports = {
   'User gets logged in after signup.': function (client) {
     client
       .assert.elementPresent('#indexPage')
-      .saveScreenshot("tests/nightwatch/screenshots/accounts/B-AuthenticatedIndex.png");
+      .saveScreenshot("tests/nightwatch/screenshots/accounts/B-AuthenticatedIndex.png")
+      .pause(3000)  //wait for alert to disappear
   },
   'User can log out.': function (client) {
     client.assert.elementPresent('#authenticatedUsername')

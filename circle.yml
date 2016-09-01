@@ -68,7 +68,7 @@ test:
     - sleep 180
   override:
     - meteor npm run-script nightwatch
-    - meteor npm run-script phantom-mocha
+    #- meteor npm run-script phantom-mocha
 
 
 ## Customize deployment commands
