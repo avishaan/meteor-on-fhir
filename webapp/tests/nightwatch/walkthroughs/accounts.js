@@ -23,7 +23,8 @@ module.exports = {
   },
   'User can log out.': function (client) {
     client.verify.elementPresent('#authenticatedUsername')
-      .click('#authenticatedUsername').pause(1000)
+      .verify.containsText('#authenticatedUsername', 'Alice Doe')
+      .click('#authenticatedUsername').pause(1500)
       .verify.elementPresent('#authenticatedUserMenu .notificationMenu .logoutMenuItem')
       .click('#authenticatedUserMenu .notificationMenu .logoutMenuItem').pause(500)
       .verify.elementPresent('#loginPage')
