@@ -46,6 +46,9 @@ ddp-rate-limiter@1.0.5
 ddp-server@1.2.8_1
 deps@1.0.12
 diff-sequence@1.0.6
+dispatch:mocha-core@0.0.2
+dispatch:mocha-phantomjs@0.1.5
+dispatch:phantomjs-tests@0.0.5
 ecmascript@0.4.6_1
 ecmascript-runtime@0.2.11_1
 ejson@1.0.12
@@ -135,3 +138,4 @@ underscore@1.0.9
 url@1.0.10
 webapp@1.2.9_1
 webapp-hashing@1.0.9
+xolvio:cleaner@0.3.1
