@@ -68,9 +68,9 @@ test:
     - meteor npm rebuild
     - meteor npm install
     - cat .meteor/nightwatch.json
-    - "meteor run":
+    - "NODE_ENV=circle meteor":
           background: true
-    - sleep 180
+    - sleep 240
   override:
     - starrynight run-tests --type validation
     #- meteor npm run-script nightwatch
