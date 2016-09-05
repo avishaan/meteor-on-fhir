@@ -3,13 +3,6 @@
 
 module.exports = {
   tags: ['routes'],
-  before: function(client){
-    client
-      .url("http://localhost:3000").pause(3000)
-      .executeAsync(function(data){
-        Meteor.call('initializeTestUsers');
-      });
-  },
   "Root": function (client) {
     client
       .resizeWindow(1024, 768)
@@ -51,7 +44,7 @@ module.exports = {
         .clearValue('input[name="password"]')
 
         .setValue('input[name="emailAddress"]', 'janedoe@test.org')
-        .setValue('input[name="password"]', 'janedoe123')
+        .setValue('input[name="password"]', 'janedoe')
 
         .saveScreenshot("tests/nightwatch/screenshots/routes/login.png")
 

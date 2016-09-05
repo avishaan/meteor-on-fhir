@@ -2,13 +2,6 @@
 
 module.exports = {
   tags: ['social', 'healthrecord', 'healthlog'],
-  before: function(client){
-    client
-      .url("http://localhost:3000").pause(3000)
-      .executeAsync(function(data){
-        Meteor.call('initializeTestUsers');
-      });
-  },
   'user can log in/out' : function (client) {
     client
   },

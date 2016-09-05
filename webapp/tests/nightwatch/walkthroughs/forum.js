@@ -1,13 +1,6 @@
 
 module.exports = {
   tags: ['forum', 'topics'],
-  before: function(client){
-    client
-      .url("http://localhost:3000").pause(3000)
-      .executeAsync(function(data){
-        Meteor.call('initializeTestUsers');
-      });
-  },
   'user can log in/out' : function (client) {
     client.resizeWindow(1200, 1024);
 
@@ -16,14 +9,11 @@ module.exports = {
 
     loginPage
       .navigate()
-      .login('janedoe@test.org', 'janedoe123')
-      .pause(2000, client);
+      .login('janedoe@test.org', 'janedoe')
+      .pause(1000, client);
 
-
-    client
-      .assert.elementPresent('#indexPage').pause(2000)
-      .assert.containsText('#authenticatedUsername', 'Jane Doe')
-      .saveScreenshot('tests/nightwatch/screenshots/accounts/A-SignUp.png');
+    indexPage.expect.element('#indexPage').to.be.present;
+    indexPage.expect.element('#authenticatedUsername').text.to.contain('Jane Doe');
   },
 
   'user should be able to log status' : function (client) {
